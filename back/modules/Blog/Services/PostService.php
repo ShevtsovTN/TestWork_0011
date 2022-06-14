@@ -51,7 +51,7 @@ class PostService
 
             DB::commit();
 
-            return $post;
+            return $post->load('user');
         } catch (Exception $exception) {
             DB::rollBack();
             throw $exception;

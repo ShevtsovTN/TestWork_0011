@@ -15,18 +15,21 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'title' => [
+                'nullable',
                 'string',
                 'min:10',
                 'max:50'
             ],
             'description' => [
+                'nullable',
                 'string',
                 'min:10',
                 'max:255'
             ],
             'content' => [
+                'nullable',
                 'string',
-                'min:500',
+                'min:50',
                 'max:1500'
             ],
         ];
