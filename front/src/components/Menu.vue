@@ -1,10 +1,10 @@
 <template>
   <ul  class="nav m-2">
     <li class="nav-item">
-      <router-link to="/" class="nav-link">Main</router-link>
+      <router-link :to="{ name: 'main'}" class="nav-link">Main</router-link>
     </li>
     <li class="nav-item">
-      <router-link to="/posts" class="nav-link">Posts</router-link>
+      <router-link :to="{ name: 'posts'}" class="nav-link">Posts</router-link>
     </li>
   </ul >
 </template>

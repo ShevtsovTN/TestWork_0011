@@ -32,13 +32,13 @@ const actions = {
   },
   
   createPost ({ commit }, data) {
-    api.update(config.url + 'posts', data).then(
+    api.post(config.url + 'posts', data).then(
       response => (commit('addPost', response.record))
     ).catch(error => (console.log(error.toJSON())))
   },
   
-  updatePost ({ commit }, postId, data) {
-    api.update(config.url + 'posts/' + postId, data).then(
+  updatePost ({ commit }, payload) {
+    api.update(config.url + 'posts/' + payload.postId, payload.data).then(
       response => (commit('updPost', response.record))
     ).catch(error => (console.log(error.toJSON())))
   },
@@ -62,9 +62,7 @@ const mutations = {
     state.posts.push(payload)
   },
   updPost (state, payload) {
-    state.all = state.all.map(function (item) {
-      return item.id === payload.id ? payload : item
-    })
+    state.post = payload
   },
   delPost (state, payload) {
     state.posts = state.posts.filter(function (item) {

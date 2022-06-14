@@ -1,53 +1,31 @@
 <template>
   <div class="container-fluid m-2">
     <PostCard
+        class="w-25 mb-2"
         v-for="post in posts"
         :key="post.id"
     >
-      <h5 class="card-title">{{ post.title }}</h5>
+      <router-link
+          class="nav-link"
+          :to="{ name: 'post', params: { postId: post.id }}"
+      >
+        <h5 class="card-title">{{ post.title }}</h5>
+      </router-link>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.description }}</h6>
-      <p class="card-text">{{ post.content }}</p>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.user.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.created_at }}</h6>
-      <button
-          type="button"
-          class="btn btn-success me-2"
-          @click="createComment(post.id)"
-      >Create Comment</button>
-      <button
+      <router-link
           type="button"
           class="btn btn-warning me-2"
-          @click="editPost(post.id)"
-      >Edit Post</button>
+          :to="{ name: 'editPost', params: { postId: post.id }}"
+      >Edit Post
+      </router-link>
       <button
           type="button"
           class="btn btn-danger me-2"
           @click="delPost(post.id)"
       >Delete Post</button>
     </PostCard>
-    <ModalForm v-if="isClicked">
-      <template v-slot:header>
-        <h5 class="modal-title" v-if="isEdit">Edit Post</h5>
-        <h5 class="modal-title" v-if="isCreate">Create Comment</h5>
-      </template>
-      <template v-slot:form>
-        <!-- content for the header slot -->
-      </template>
-      <template v-slot:button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          v-if="isEdit"
-        >Save
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          v-if="isCreate"
-        >Create
-        </button>
-      </template>
-    </ModalForm>
   </div>
 </template>
 
@@ -75,7 +53,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
