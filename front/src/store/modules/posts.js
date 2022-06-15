@@ -25,8 +25,8 @@ const actions = {
           commit('setPosts', response.records)
         })
       .catch(error => (console.log(error.toJSON())))
-    
   },
+  
   getPost ({ commit }, postId) {
     api.get(config.url + 'posts/' + postId)
       .then(response => {

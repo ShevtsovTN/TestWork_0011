@@ -20,33 +20,43 @@ const getters = {
 const actions = {
   
   getComments ({ commit }) {
-    api.get(config.url + 'comments').then(
-      response => (commit('setComments', response.records))
-    )
+    api.get(config.url + 'comments')
+      .then(response => {
+        commit('setComments', response.records)
+      })
+      .catch(error => (console.log(error.toJSON())))
     
   },
   getComment ({ commit }, commentId) {
-    api.get(config.url + 'comments/' + commentId).then(
-      response => (commit('setComment', response.record))
-    ).catch(error => (console.log(error.toJSON())))
+    api.get(config.url + 'comments/' + commentId)
+      .then(response => {
+        commit('setComment', response.record)
+      })
+      .catch(error => (console.log(error.toJSON())))
   },
   
-  createComment ({ commit }, data) {
-    api.update(config.url + 'comments', data).then(
-      response => (commit('addComment', response.record))
-    ).catch(error => (console.log(error.toJSON())))
+  createComment ({ commit }, payload) {
+    api.update(config.url + 'comments', payload)
+      .then(response => {
+        commit('addComment', response.record)
+      })
+      .catch(error => (console.log(error.toJSON())))
   },
   
-  updateComment ({ commit }, commentId, data) {
-    api.update(config.url + 'comments/' + commentId, data).then(
-      response => (commit('updComment', response.record))
-    ).catch(error => (console.log(error.toJSON())))
+  updateComment ({ commit }, payload) {
+    api.update(config.url + 'comments/' + payload.commentId, payload.data)
+      .then(response => {
+        commit('updComment', response.record)
+      })
+      .catch(error => (console.log(error.toJSON())))
   },
   
   deleteComment ({ commit }, commentId) {
-    api.destroy(config.url + 'comments/' + commentId).then(
-      response => (commit('delComment', response.record))
-    ).catch(error => (console.log(error.toJSON())))
+    api.destroy(config.url + 'comments/' + commentId)
+      .then(response => {
+        commit('delComment', response.record)
+      })
+      .catch(error => (console.log(error.toJSON())))
   }
 }
 
