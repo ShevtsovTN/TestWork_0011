@@ -29,7 +29,7 @@ class CreatePostRequest extends FormRequest
             'content' => [
                 'required',
                 'string',
-                'min:10',
+                'min:50',
                 'max:1500'
             ],
         ];

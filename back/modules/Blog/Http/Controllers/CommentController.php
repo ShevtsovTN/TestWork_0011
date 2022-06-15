@@ -27,7 +27,9 @@ class CommentController extends Controller
     public function index(): CommentCollection
     {
         return CommentCollection::make(
-            Comment::with(['user', 'post'])->paginate(min(15, request('per_page', 15)))
+            Comment::with(['user', 'post'])
+                ->orderByDesc('created_at')
+                ->paginate(min(15, request('per_page', 15)))
         );
     }
 

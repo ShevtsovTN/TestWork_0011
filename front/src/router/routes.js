@@ -4,6 +4,7 @@ import Post from '@/pages/Post'
 import Comments from '@/pages/Comments'
 import PostsLayout from '@/pages/PostsLayout'
 import PostEdit from '@/pages/PostEdit'
+import PostCreate from '@/pages/PostCreate'
 
 export default [
   {
@@ -29,6 +30,11 @@ export default [
         path: 'edit/:postId',
         name: 'editPost',
         component: PostEdit
+      },
+      {
+        path: 'create',
+        name: 'createPost',
+        component: PostCreate
       }
     ]
   },

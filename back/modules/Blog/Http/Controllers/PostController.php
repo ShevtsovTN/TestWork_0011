@@ -27,7 +27,9 @@ class PostController extends Controller
     public function index(): PostCollection
     {
         return PostCollection::make(
-            Post::with(['user', 'comments'])->paginate(min(15, request('per_page', 15)))
+            Post::with(['user', 'comments.user'])
+                ->orderByDesc('created_at')
+                ->paginate(min(15, request('per_page', 15)))
         );
     }
 
@@ -37,7 +39,7 @@ class PostController extends Controller
      */
     public function show(Post $post): PostResource
     {
-        return PostResource::make($post->load(['user', 'comments']));
+        return PostResource::make($post->load(['user', 'comments.user']));
     }
 
     /**
