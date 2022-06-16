@@ -45,7 +45,7 @@
             @blur="form.content.blur"
             v-model="form.content.value"
         ></textarea>
-        <small class="text-muted">min 50 / {{form.content.value.length}} / max 1500</small>
+        <small class="text-muted">min 10 / {{form.content.value.length}} / max 300</small>
         <small class="invalid-feedback" v-if="form.content.errors.required">
           The field cannot be empty!
         </small>

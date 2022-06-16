@@ -38,7 +38,9 @@ const actions = {
   // eslint-disable-next-line no-unused-vars
   createComment ({ commit }, payload) {
     api.post(config.url + 'comments/' + payload.postId, payload.data)
-      .then()
+      .then(response => {
+        commit('addCommentToPost', response.record)
+      })
       .catch(error => (console.log(error.toJSON())))
   },
   

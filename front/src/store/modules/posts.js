@@ -75,6 +75,9 @@ const mutations = {
   addPost (state, payload) {
     state.posts.push(payload)
   },
+  addCommentToPost (state, payload) {
+    state.post.comments.push(payload)
+  },
   updPost (state, payload) {
     state.post = payload
   },
