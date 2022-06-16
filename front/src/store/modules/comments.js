@@ -35,21 +35,19 @@ const actions = {
       .catch(error => (console.log(error.toJSON())))
   },
   
+  // eslint-disable-next-line no-unused-vars
   createComment ({ commit }, payload) {
-    api.update(config.url + 'comments', payload)
-      .then(response => {
-        commit('addComment', response.record)
-      })
+    api.post(config.url + 'comments/' + payload.postId, payload.data)
+      .then()
       .catch(error => (console.log(error.toJSON())))
   },
   
-  updateComment ({ commit }, payload) {
-    api.update(config.url + 'comments/' + payload.commentId, payload.data)
-      .then(response => {
-        commit('updComment', response.record)
-      })
-      .catch(error => (console.log(error.toJSON())))
-  },
+  // eslint-disable-next-line no-unused-vars
+  // updateComment ({ commit }, payload) {
+  //   api.update(config.url + 'comments/' + payload.commentId, payload.data)
+  //     .then()
+  //     .catch(error => (console.log(error.toJSON())))
+  // },
   
   deleteComment ({ commit }, commentId) {
     api.destroy(config.url + 'comments/' + commentId)
@@ -67,14 +65,6 @@ const mutations = {
   },
   setComment (state, payload) {
     state.comment = payload
-  },
-  addComment(state, payload) {
-    state.comments.push(payload)
-  },
-  updComment (state, payload) {
-    state.comments = state.comments.map(function (item) {
-      return item.id === payload.id ? payload : item
-    })
   },
   delComment (state, payload) {
     state.comments = state.comments.filter(function (item) {

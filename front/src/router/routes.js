@@ -5,6 +5,7 @@ import Comments from '@/pages/Comments'
 import PostsLayout from '@/pages/PostsLayout'
 import PostCreate from '@/pages/PostCreate'
 import PostEdit from '@/pages/PostEdit'
+import CommentCreate from '@/pages/CommentCreate'
 
 export default [
   {
@@ -35,6 +36,11 @@ export default [
         path: 'create',
         name: 'createPost',
         component: PostCreate
+      },
+      {
+        path: ':postId/comment/create',
+        name: 'createComment',
+        component: CommentCreate
       }
     ]
   },

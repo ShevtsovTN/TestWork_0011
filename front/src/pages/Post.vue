@@ -11,14 +11,12 @@
       <p class="card-text">{{ post.content }}</p>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.user?.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.created_at }}</h6>
-      <button
-          type="button"
-          class="btn btn-success me-2"
-          @click="createComment(post.id)"
-      >Create Comment
-      </button>
       <router-link
-          type="button"
+          class="btn btn-success me-2"
+          :to="{ name: 'createComment', params: { postId: postId }}"
+      >Create Comment
+      </router-link>
+      <router-link
           class="btn btn-warning me-2"
           :to="{ name: 'editPost', params: { postId: postId }}"
       >Edit Post

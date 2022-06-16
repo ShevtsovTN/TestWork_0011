@@ -9,12 +9,6 @@
       <p class="card-text">{{ comment.content }}</p>
       <h6 class="card-subtitle mb-2 text-muted">{{ comment.user.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ comment.created_at }}</h6>
-<!--      <router-link-->
-<!--          type="button"-->
-<!--          class="btn btn-warning me-2"-->
-<!--          :to="{ name: 'editComment', params: { commentId: comment.id }}"-->
-<!--      >Edit Post-->
-<!--      </router-link>-->
       <button
         type="button"
         class="btn btn-danger me-2"
