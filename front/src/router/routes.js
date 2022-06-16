@@ -3,8 +3,8 @@ import Posts from '@/pages/Posts'
 import Post from '@/pages/Post'
 import Comments from '@/pages/Comments'
 import PostsLayout from '@/pages/PostsLayout'
-import PostEdit from '@/pages/PostEdit'
 import PostCreate from '@/pages/PostCreate'
+import PostEdit from '@/pages/PostEdit'
 
 export default [
   {

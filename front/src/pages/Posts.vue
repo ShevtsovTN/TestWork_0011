@@ -1,5 +1,11 @@
 <template>
-  <div class="container-fluid m-2">
+  <PreloaderComponent
+      v-if="loading"
+  ></PreloaderComponent>
+  <div
+      class="container-fluid m-2"
+      v-else
+  >
     <PostCard
         class="w-25 mb-2"
         v-for="post in posts"
@@ -15,7 +21,6 @@
       <h6 class="card-subtitle mb-2 text-muted">{{ post.user.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.created_at }}</h6>
       <router-link
-          type="button"
           class="btn btn-warning me-2"
           :to="{ name: 'editPost', params: { postId: post.id }}"
       >Edit Post
@@ -33,10 +38,12 @@
 import PostCard from '@/components/PostCard'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import PreloaderComponent from '@/components/Preloader'
 
 export default {
   name: 'PostsPage',
   components: {
+    PreloaderComponent,
     PostCard
   },
   setup() {
@@ -48,6 +55,7 @@ export default {
 
     return {
       posts: computed(() => store.getters.getPosts),
+      loading: computed(() => store.getters.getLoading),
       delPost: (postId) => store.dispatch('deletePost', postId)
     }
   }

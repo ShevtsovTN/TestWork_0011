@@ -1,5 +1,11 @@
 <template>
-  <div class="container  m-2">
+  <PreloaderComponent
+      v-if="loading"
+  ></PreloaderComponent>
+  <div
+      class="container  m-2"
+      v-else
+  >
     <PostCard class="mb-2">
       <h5 class="card-title mb-2">{{ post.title }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.description }}</h6>
@@ -90,13 +96,14 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { computed, onMounted } from 'vue'
 import PostCard from '@/components/PostCard'
+import PreloaderComponent from '@/components/Preloader'
 import { useForm } from '@/use/form'
 import { reactive } from 'vue'
 import { minLength, maxLength } from '@/use/validation'
 
 export default {
   name: 'PostEdit',
-  components: { PostCard },
+  components: { PostCard, PreloaderComponent },
   setup() {
     const store = useStore()
     const route = useRoute()
@@ -135,6 +142,7 @@ export default {
 
     return {
       post: computed(() => store.getters.getPost),
+      loading: computed(() => store.getters.getLoading),
       form,
       submit
     }

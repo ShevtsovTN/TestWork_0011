@@ -22,15 +22,19 @@ const actions = {
   getPosts ({ commit }) {
     api.get(config.url + 'posts')
       .then(response => {
-          commit('setPosts', response.records)
-        })
+        commit('setLoading', true)
+        commit('setPosts', response.records)
+        commit('setLoading', false)
+      })
       .catch(error => (console.log(error.toJSON())))
   },
   
   getPost ({ commit }, postId) {
     api.get(config.url + 'posts/' + postId)
       .then(response => {
+        commit('setLoading', true)
         commit('setPost', response.record)
+        commit('setLoading', false)
       })
       .catch(error => (console.log(error.toJSON())))
   },
@@ -68,7 +72,7 @@ const mutations = {
   setPost (state, payload) {
     state.post = payload
   },
-  addPost(state, payload) {
+  addPost (state, payload) {
     state.posts.push(payload)
   },
   updPost (state, payload) {
