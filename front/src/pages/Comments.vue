@@ -16,11 +16,17 @@
       >Delete Comment
       </button>
     </CommentCard>
+    <button
+        type="button"
+        class="btn btn-outline-success me-2 mb-2"
+        :disabled="checkNextCommentPage"
+        @click="loadMoreComments"
+    >Load More</button>
   </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import CommentCard from '@/components/CommentCard'
 
@@ -31,14 +37,23 @@ export default {
   },
   setup() {
     const store = useStore()
+    let counterPage = ref(1)
 
     onMounted(() => {
-      store.dispatch('getComments')
+      store.dispatch('getComments', counterPage)
     });
+
+    function loadMoreComments() {
+      if (store.getters.checkNextCommentPage) {
+        store.dispatch('getComments', ++counterPage.value)
+      }
+    }
 
     return {
       comments: computed(() => store.getters.getComments),
-      delComment: (commentId) => store.dispatch('deleteComment', commentId)
+      checkNextCommentPage: computed(() => !store.getters.checkNextCommentPage),
+      delComment: (commentId) => store.dispatch('deleteComment', commentId),
+      loadMoreComments
     }
   }
 }

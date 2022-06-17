@@ -3,7 +3,8 @@
       v-if="loading"
   ></PreloaderComponent>
   <div
-      class="container-fluid m-2"
+      id="posts-container"
+      class="container-fluid mt-2"
       v-else
   >
     <PostCard
@@ -31,12 +32,18 @@
           @click="delPost(post.id)"
       >Delete Post</button>
     </PostCard>
+    <button
+        type="button"
+        class="btn btn-outline-success me-2 mb-2"
+        :disabled="checkNextPostPage"
+        @click="loadMorePosts"
+    >Load More</button>
   </div>
 </template>
 
 <script>
 import PostCard from '@/components/PostCard'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import PreloaderComponent from '@/components/Preloader'
 
@@ -48,15 +55,24 @@ export default {
   },
   setup() {
     const store = useStore()
+    let counterPage = ref(1)
 
     onMounted(() => {
-      store.dispatch('getPosts')
+      store.dispatch('getPosts', counterPage)
     });
+
+    function loadMorePosts() {
+      if (store.getters.checkNextPostPage) {
+        store.dispatch('getPosts', ++counterPage.value)
+      }
+    }
 
     return {
       posts: computed(() => store.getters.getPosts),
       loading: computed(() => store.getters.getLoading),
-      delPost: (postId) => store.dispatch('deletePost', postId)
+      checkNextPostPage: computed(() => !store.getters.checkNextPostPage),
+      delPost: (postId) => store.dispatch('deletePost', postId),
+      loadMorePosts
     }
   }
 }

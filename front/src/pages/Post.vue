@@ -60,10 +60,6 @@ export default {
       store.dispatch('getPost', route.params.postId)
     })
 
-    function createComment(postId) {
-      console.log(postId)
-    }
-
     function delPost(postId) {
       store.dispatch('deletePost', postId)
     }
@@ -72,7 +68,6 @@ export default {
       postId: route.params.postId,
       post: computed(() => store.getters.getPost),
       loading: computed(() => store.getters.getLoading),
-      createComment,
       delPost
     }
   }

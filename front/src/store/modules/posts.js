@@ -3,7 +3,8 @@ import api from '@/api/index'
 
 const state = {
   posts: [],
-  post: {}
+  post: {},
+  checkNextPostPage: false
 }
 
 // getters
@@ -13,16 +14,20 @@ const getters = {
   },
   getPost (state) {
     return state.post
+  },
+  checkNextPostPage (state) {
+    return state.checkNextPostPage
   }
 }
 
 // actions
 const actions = {
   
-  getPosts ({ commit }) {
-    api.get(config.url + 'posts')
+  getPosts ({ commit }, payload) {
+    api.get(config.url + 'posts?page=' + payload)
       .then(response => {
         commit('setLoading', true)
+        commit('setCheckNextPostPage', response.meta)
         commit('setPosts', response.records)
         commit('setLoading', false)
       })
@@ -67,20 +72,29 @@ const actions = {
 // mutations
 const mutations = {
   setPosts (state, payload) {
-    state.posts = payload
+    state.posts = state.posts.concat(payload)
   },
+  
   setPost (state, payload) {
     state.post = payload
   },
+  
   addPost (state, payload) {
     state.posts.push(payload)
   },
+  
   addCommentToPost (state, payload) {
     state.post.comments.push(payload)
   },
+  
+  setCheckNextPostPage (state, payload) {
+    state.checkNextPostPage = payload.current_page < payload.last_page
+  },
+  
   updPost (state, payload) {
     state.post = payload
   },
+  
   delPost (state, payload) {
     state.posts = state.posts.filter(function (item) {
       return item.id !== payload.id

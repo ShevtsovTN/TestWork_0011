@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
         ]), 'roles')->create();
 
         foreach ($writers as $writer) {
-            Post::factory()->for($writer, 'user')->create();
+            Post::factory(6)->for($writer, 'user')->create();
         }
         foreach ($readers as $reader) {
-            Comment::factory()
+            Comment::factory(2)
                 ->for(Post::inRandomOrder()->first(), 'post')
                 ->for($reader, 'user')
                 ->create();

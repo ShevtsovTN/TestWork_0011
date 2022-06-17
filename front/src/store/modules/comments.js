@@ -3,7 +3,8 @@ import api from '@/api/index'
 
 const state = {
   comments: [],
-  comment: {}
+  comment: {},
+  checkNextCommentPage: false
 }
 
 // getters
@@ -13,16 +14,22 @@ const getters = {
   },
   getComment (state) {
     return state.comment
+  },
+  checkNextCommentPage (state) {
+    return state.checkNextCommentPage
   }
 }
 
 // actions
 const actions = {
   
-  getComments ({ commit }) {
-    api.get(config.url + 'comments')
+  getComments ({ commit }, payload) {
+    api.get(config.url + 'comments?page=' + payload)
       .then(response => {
+        commit('setLoading', true)
+        commit('setCheckNextCommentPage', response.meta)
         commit('setComments', response.records)
+        commit('setLoading', false)
       })
       .catch(error => (console.log(error.toJSON())))
     
@@ -35,7 +42,6 @@ const actions = {
       .catch(error => (console.log(error.toJSON())))
   },
   
-  // eslint-disable-next-line no-unused-vars
   createComment ({ commit }, payload) {
     api.post(config.url + 'comments/' + payload.postId, payload.data)
       .then(response => {
@@ -44,7 +50,6 @@ const actions = {
       .catch(error => (console.log(error.toJSON())))
   },
   
-  // eslint-disable-next-line no-unused-vars
   // updateComment ({ commit }, payload) {
   //   api.update(config.url + 'comments/' + payload.commentId, payload.data)
   //     .then()
@@ -63,7 +68,10 @@ const actions = {
 // mutations
 const mutations = {
   setComments (state, payload) {
-    state.comments = payload
+    state.comments = state.comments.concat(payload)
+  },
+  setCheckNextCommentPage (state, payload) {
+    state.checkNextCommentPage = payload.current_page < payload.last_page
   },
   setComment (state, payload) {
     state.comment = payload

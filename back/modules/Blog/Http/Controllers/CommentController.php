@@ -29,7 +29,7 @@ class CommentController extends Controller
         return CommentCollection::make(
             Comment::with(['user', 'post'])
                 ->orderByDesc('created_at')
-                ->paginate(min(15, request('per_page', 15)))
+                ->paginate(request('per_page', 5))
         );
     }
 
