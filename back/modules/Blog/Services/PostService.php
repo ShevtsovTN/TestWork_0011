@@ -2,9 +2,10 @@
 
 namespace Modules\Blog\Services;
 
-use App\Models\Role;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Blog\Models\Post;
 
@@ -15,14 +16,14 @@ class PostService
      * Создание поста
      *
      * @param array $validated
-     * @return Post
+     * @return Post|Model
      * @throws Exception
      */
-    public function create(array $validated): Post
+    public function create(array $validated): Post|Model
     {
         DB::beginTransaction();
         try {
-            $author = $this->getAuthorPost();
+            $author = User::find(Auth::id());
 
             $post = $author->posts()->create($validated);
 
@@ -77,12 +78,5 @@ class PostService
             DB::rollBack();
             throw $exception;
         }
-    }
-
-    private function getAuthorPost(): User
-    {
-        return User::whereHas('roles', function ($q) {
-            $q->where('role', Role::ROLE_WRITER);
-        })->first();
     }
 }

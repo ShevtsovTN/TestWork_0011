@@ -5,6 +5,7 @@ namespace Modules\Blog\Services;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Blog\Models\Comment;
 use Modules\Blog\Models\Post;
@@ -23,7 +24,7 @@ class CommentService
     {
         DB::beginTransaction();
         try {
-            $author = $this->getAuthorComment();
+            $author = User::find(Auth::id());
 
             $comment = Comment::factory()
                 ->for($author, 'user')
@@ -81,12 +82,5 @@ class CommentService
             DB::rollBack();
             throw $exception;
         }
-    }
-
-    private function getAuthorComment(): User
-    {
-        return User::whereHas('roles', function ($q) {
-            $q->where('role', Role::ROLE_READER);
-        })->first();
     }
 }
