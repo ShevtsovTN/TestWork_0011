@@ -18,7 +18,7 @@ axios.defaults.withCredentials = true
 axios.defaults.headers.common['Accept'] = 'application/json'
 
 api.get(config.url + 'auth').then(response => {
-  if (response.record !== undefined) {
+  if (response.record.length !== 0) {
     store.commit('setUser', response.record)
   }
 })

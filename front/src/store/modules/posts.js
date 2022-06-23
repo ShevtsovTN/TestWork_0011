@@ -80,7 +80,7 @@ const mutations = {
   },
   
   addPost (state, payload) {
-    state.posts.push(payload)
+    state.posts.unshift(payload)
   },
   
   addCommentToPost (state, payload) {

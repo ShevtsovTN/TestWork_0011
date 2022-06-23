@@ -122,7 +122,7 @@ export default {
         data[key] = value.value
       }
       store.dispatch('createPost', { data })
-      router.push('posts')
+      router.push({name: 'posts'})
     }
 
 
