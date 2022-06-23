@@ -12,16 +12,19 @@
       <h6 class="card-subtitle mb-2 text-muted">{{ post.user?.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.created_at }}</h6>
       <router-link
+          v-if="isReader"
           class="btn btn-success me-2"
           :to="{ name: 'createComment', params: { postId: postId }}"
       >Create Comment
       </router-link>
       <router-link
+          v-if="isAdmin || isModerator"
           class="btn btn-warning me-2"
           :to="{ name: 'editPost', params: { postId: postId }}"
       >Edit Post
       </router-link>
       <button
+          v-if="isAdmin || isModerator"
           type="button"
           class="btn btn-danger me-2"
           @click="delPost(post.id)"
@@ -68,7 +71,10 @@ export default {
       postId: route.params.postId,
       post: computed(() => store.getters.getPost),
       loading: computed(() => store.getters.getLoading),
-      delPost
+      delPost,
+      isAdmin: computed(() => store.getters.isAdmin),
+      isModerator: computed(() => store.getters.isModerator),
+      isReader: computed(() => store.getters.isReader),
     }
   }
 }

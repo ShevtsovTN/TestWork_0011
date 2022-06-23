@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 
-class UserResource extends BaseResource
+class RoleResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,7 @@ class UserResource extends BaseResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'role' => RoleCollection::make($this->whenLoaded('roles')),
+            'name' => $this->role,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

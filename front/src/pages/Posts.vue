@@ -22,11 +22,13 @@
       <h6 class="card-subtitle mb-2 text-muted">{{ post.user.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ post.created_at }}</h6>
       <router-link
+          v-if="isAdmin || isModerator"
           class="btn btn-warning me-2"
           :to="{ name: 'editPost', params: { postId: post.id }}"
       >Edit Post
       </router-link>
       <button
+          v-if="isAdmin || isModerator"
           type="button"
           class="btn btn-danger me-2"
           @click="delPost(post.id)"
@@ -58,7 +60,7 @@ export default {
     let counterPage = ref(1)
 
     onMounted(() => {
-      store.dispatch('getPosts', counterPage)
+      store.dispatch('getPosts', counterPage.value)
     });
 
     function loadMorePosts() {
@@ -72,7 +74,9 @@ export default {
       loading: computed(() => store.getters.getLoading),
       checkNextPostPage: computed(() => !store.getters.checkNextPostPage),
       delPost: (postId) => store.dispatch('deletePost', postId),
-      loadMorePosts
+      loadMorePosts,
+      isAdmin: computed(() => store.getters.isAdmin),
+      isModerator: computed(() => store.getters.isModerator),
     }
   }
 }

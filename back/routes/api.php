@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Fortify;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +14,8 @@ use Laravel\Fortify\Fortify;
 |
 */
 
-Route::post('/tokens/create', function (Request $request) {
-    dd($request->input());
-    $token = $request->user()->createToken($request->token_name);
-    return ['token' => $token->plainTextToken];
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::as('auth.')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/auth', [AuthController::class, 'getAuthUser'])->name('auth.user');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

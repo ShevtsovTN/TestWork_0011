@@ -10,6 +10,7 @@
       <h6 class="card-subtitle mb-2 text-muted">{{ comment.user.name }}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{ comment.created_at }}</h6>
       <button
+          v-if="isAdmin || isModerator"
         type="button"
         class="btn btn-danger me-2"
         @click="delComment(comment.id)"
@@ -40,7 +41,7 @@ export default {
     let counterPage = ref(1)
 
     onMounted(() => {
-      store.dispatch('getComments', counterPage)
+      store.dispatch('getComments', counterPage.value)
     });
 
     function loadMoreComments() {
@@ -53,7 +54,9 @@ export default {
       comments: computed(() => store.getters.getComments),
       checkNextCommentPage: computed(() => !store.getters.checkNextCommentPage),
       delComment: (commentId) => store.dispatch('deleteComment', commentId),
-      loadMoreComments
+      loadMoreComments,
+      isAdmin: computed(() => store.getters.isAdmin),
+      isModerator: computed(() => store.getters.isModerator),
     }
   }
 }

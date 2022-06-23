@@ -6,6 +6,7 @@ import PostsLayout from '@/pages/PostsLayout'
 import PostCreate from '@/pages/PostCreate'
 import PostEdit from '@/pages/PostEdit'
 import CommentCreate from '@/pages/CommentCreate'
+import LoginPage from '@/pages/LoginPage'
 
 export default [
   {
@@ -48,5 +49,10 @@ export default [
     path: '/comments',
     name: 'comments',
     component: Comments
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPage
   }
 ]
